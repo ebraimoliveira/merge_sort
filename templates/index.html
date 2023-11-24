@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="../static/style.css">
+  <title>Value Sorter</title>
+</head>
+
+<body>
+  <h2>Value Sorter</h2>
+
+  <form action="/" method="post">
+    <label for="values">Enter values:</label>
+    <input type="text" name="values" autofocus>
+    <input type="submit" value="Sort">
+  </form>
+
+  {% if input_values %}
+  <p>Input values: {{input_values}}</p>
+  {% endif %}
+
+  {% if ordered_value %}
+  <p>Sorted values: {{ ordered_value | join(' ') }}</p>
+  {% endif %}
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const algorithmText = document.createElement('div');
+      algorithmText.className = 'algorithm-text';
+      algorithmText.textContent = 'Algorithm';
+      document.body.appendChild(algorithmText);
+
+      const texts = ['Algorithm', 'Merge Sort', 'Recursion'];
+
+      function getRandomPosition() {
+        const screenWidth = window.innerWidth - 200;
+        const screenHeight = window.innerHeight - 40;
+
+        const maxScrollX = window.innerWidth - document.documentElement.clientWidth;
+        const maxScrollY = window.innerHeight - document.documentElement.clientHeight;
+
+        const randomX = Math.floor(Math.random() * (screenWidth - maxScrollX));
+        const randomY = Math.floor(Math.random() * (screenHeight - maxScrollY));
+        return { x: randomX, y: randomY };
+      }
+
+      function moveAlgorithmText() {
+        const position = getRandomPosition();
+        algorithmText.style.left = position.x + 'px';
+        algorithmText.style.top = position.y + 'px';
+
+
+        const randomText = texts[Math.floor(Math.random() * texts.length)];
+        algorithmText.textContent = randomText;
+
+        document.body.classList.add('no-scroll');
+
+
+        algorithmText.style.opacity = 1;
+        setTimeout(() => {
+          algorithmText.style.opacity = 0;
+          document.body.classList.remove('no-scroll');
+        }, 2000);
+      }
+
+      setInterval(moveAlgorithmText, 5000);
+    });
+
+  </script>
+
+</body>
+
+</html>
